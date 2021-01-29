@@ -8,8 +8,8 @@ Save Time for Testing a large number of Videos on Diff Devices
 1. Generate Test File Automatically[Windows 10]
 
 ## How to use it?
-just DOUBLE CLICK the bat file
-
+1. just DOUBLE CLICK the run.bat file
+2. check files in outputs
 
 
 
