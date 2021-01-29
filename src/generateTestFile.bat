@@ -2,7 +2,7 @@
 echo "hello Lewis!"
 
 REM CUSTOMIZE for USER
-set CUST_combined_file_count=0
+set CUST_combined_file_count=10
 
 echo ----------------------------------------------------
 echo ------------------CUSTOMIZE START-------------------
@@ -61,14 +61,14 @@ for %%a in (1,2) do ( REM audio channel
 							
 							REM FILE limitation
 							if !CUST_combined_file_count! lss 0 (
-								echo No NEED GENERATE!!!
-								goto 0
-							)
-							if !count! GTR !CUST_combined_file_count! (
-								echo GTR[SYS_count, CUST_combined_file_count]: [!count!, !CUST_combined_file_count!]
-								goto 0
-								REM pause
-								REM EXIT
+								echo GENERATE ALL COMBINATIONS!!!
+							) else (
+								if !count! GTR !CUST_combined_file_count! (
+									echo GTR[SYS_count, CUST_combined_file_count]: [!count!, !CUST_combined_file_count!]
+									goto 0
+									REM pause
+									REM EXIT
+								)
 							)
 							
 							set output_file=[!count!]A_!aChannel!_!aFreq!_!aCodec!_V_!vFps!_!vResolutionWH!_!vCodec!.!vFormat!
