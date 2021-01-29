@@ -4,27 +4,23 @@ echo "hello Lewis!"
 set input_dir=resources
 set input_file=bbb_short.ffmpeg.1920x1080.mp4.libx264_5000kbps_30fps.libfaac_stereo_192kbps_48000Hz.ts
 set output_dir=outputs
+set tool_ffmpeg=..\tools\ffmpeg.exe
 
 if exist ..\!input_dir!\!input_file! (
-	color fc
-	echo EXIST: ..\!input_dir!\!input_file!
-	color 07
+	echo EXIST: INPUT_FILE: ..\!input_dir!\!input_file!
 	
 	if not exist ..\!output_dir! (
-		@echo NOT EXIST: ..\!output_dir!
+		@echo NOT EXIST: OUTPUT_DIR: ..\!output_dir!. AUTO GENERATE IT.
 		md ..\!output_dir!
 	) else (
-		@echo EXIST: ..\!output_dir!
+		@echo EXIST: OUTPUT_DIR: ..\!output_dir!
 	)
 	
-	copy ..\!input_dir!\!input_file! ..\!output_dir!\!input_file!
+	REM copy ..\!input_dir!\!input_file! ..\!output_dir!\!input_file!
 	
 ) else (
-	@echo NOT EXIST: ..\!input_dir!\!input_file!
+	@echo NOT EXIST: INPUT_FILE: ..\!input_dir!\!input_file!
 )
-
-pause
-EXIT
 
 
 set count=0
@@ -49,14 +45,14 @@ for %%a in (1,2) do ( REM audio channel
 							set output_file=[!count!]A_!aChannel!_!aFreq!_!aCodec!_V_!vFps!_!vResolutionWH!_!vCodec!.!vFormat!
 							echo !output_file!...ING
 							
-							if exist !output_file! (
+							if exist ..\!output_dir!\!output_file! (
 								@echo !output_file! exists, will delete it and re-generate it.
-								del !output_file!
+								del ..\!output_dir!\!output_file!
 							)
-							@ffmpeg.exe -i %input_file% -ac !aChannel! -ar !aFreq! -c:a !aCodec! -r !vFps! -s !vResolutionWH! -c:v !vCodec! -strict -2 !output_file! >nul 2>nul
+							!tool_ffmpeg! -i ..\!input_dir!\%input_file% -ac !aChannel! -ar !aFreq! -c:a !aCodec! -r !vFps! -s !vResolutionWH! -c:v !vCodec! -strict -2 ..\!output_dir!\!output_file! >nul 2>nul
 							echo !output_file!...DONE
 							
-							if !count! equ 1 (
+							if !count! equ 10 (
 								pause
 								EXIT
 							)
